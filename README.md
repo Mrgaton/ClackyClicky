@@ -2,7 +2,6 @@
 
 [![Build status][img_build]][build]
 [![CodeFactor][img_codefactor]][codefactor]
-[![Gitter Chat][img_gitter]][gitter]
 [![MIT License][img_license]][license]
 
 Welcome to ClackyClicky, a program that simulates the sound of a mechanical keyboard. Every time you press a key, you'll hear the satisfying click of a mechanical switch.
