@@ -34,7 +34,6 @@ namespace ClackyClicky
 
             this.TopMost = true;
 
-
             if (!File.Exists(ConfigHelper.ConfigFile))
             {
                 NotifyIcon.BalloonTipText = "Bienvenido a " + Application.ProductName + " la app se ejecutara en segundo plano, puedes configurar el programa desde el menu de iconos ocultos";
@@ -83,12 +82,7 @@ namespace ClackyClicky
                 }
             });
 
-
-
-
-
             TrayMenuStrip.Items.Insert(0, new ToolStripLabel(Application.ProductName) { Image = Program.ProgramIco.ToBitmap() });
-
 
             bool AutoRunActivated = false;
 
@@ -101,11 +95,8 @@ namespace ClackyClicky
 
             DisableUACMenuItem.Checked = !Program.UACEnabled;
 
-
-
             GlobalKeyPressed += KeyboardHook_GlobalKeyPressed;
             GlobalKeyReleased += KeyboardHook_GlobalKeyReleased;
-
 
             /*if(WindowsTheme == WindowsThemeMode.DarkTheme)
             {
@@ -117,15 +108,12 @@ namespace ClackyClicky
                 LoadBlackTheme();
             }
 
-
             string PauseOnGame = ConfigHelper.ReadConfig(Application.ProductName, "PauseOnGame");
 
             if (!string.IsNullOrWhiteSpace(PauseOnGame))
             {
                 PauseOnGameMenuItem.Checked = bool.TryParse(PauseOnGame, out bool Pause) ? Pause : false;
             }
-
-
 
             string VolumeSavedString = ConfigHelper.ReadConfig(Application.ProductName, "KeysVolume");
 
@@ -209,12 +197,9 @@ namespace ClackyClicky
             TrayMenuStrip.BackColor = BackColor;
             TrayMenuStrip.ForeColor = Color.White;
 
-
-
             TrayMenuStrip.Renderer = new ToolStripProfessionalRenderer(new MenuColorTable());
 
             SoundPackComboBox.ComboBox.BackColor = DiffBackColor;
-
 
             SoundPackComboBox.ForeColor = Color.White;
 
@@ -227,7 +212,6 @@ namespace ClackyClicky
 
             SoundPackComboBox.BackColor = BackColor;
         }
-
 
         public class MenuColorTable : ProfessionalColorTable
         {
@@ -262,8 +246,6 @@ namespace ClackyClicky
             }
         }
 
-
-
         private Image InvertImage(Image image)
         {
             Bitmap pic = (Bitmap)image;
@@ -280,14 +262,10 @@ namespace ClackyClicky
             return pic;
         }
 
-
-
-
         private static string KeysAudioDirectory = Path.Combine(Program.ProgramDirectory, "KeySounds");
         private static List<SoundPack> KeysSoundPacks = new List<SoundPack>();
 
         private static SoundPack CurrentSoundPack;
-
         private enum PressType
         {
             Press,
@@ -335,6 +313,7 @@ namespace ClackyClicky
                         string[] Audios = Directory.GetFiles(SoundDir);
 
                         for (int i = 0; i < 3; i++)
+                        {
                             foreach (string Audio in Audios)
                             {
                                 MP3Player Player = new MP3Player();
@@ -390,6 +369,7 @@ namespace ClackyClicky
                                     }
                                 }
                             }
+                        }
                     }
 
                     KeysSoundPacks.Add(SndPack);
@@ -398,12 +378,8 @@ namespace ClackyClicky
                 {
                     MessageBox.Show(ex.ToString());
                 }
-
-
             });
-
         }
-
 
         private class SoundPack
         {
@@ -411,15 +387,11 @@ namespace ClackyClicky
             private bool AlredyLoaded = false;
             public string KeysName { get; set; } = null;
 
-
-
             public List<MP3Player> GenericPressAudio = new List<MP3Player>();
             public MP3Player RandomGenericPressAudio() => RandomElement(GenericPressAudio);
 
             public List<MP3Player> GenericReleaseAudio = new List<MP3Player>();
             public MP3Player RandomGenericReleaseAudio() => RandomElement(GenericReleaseAudio);
-
-
 
             public List<MP3Player> BackspacePressAudio = new List<MP3Player>();
             public MP3Player RandomBackspacePressAudio() => RandomElement(BackspacePressAudio);
@@ -427,22 +399,17 @@ namespace ClackyClicky
             public List<MP3Player> BackspaceReleaseAudio = new List<MP3Player>();
             public MP3Player RandomBackspaceReleaseAudio() => RandomElement(BackspaceReleaseAudio);
 
-
-
             public List<MP3Player> EnterPressAudio = new List<MP3Player>();
             public MP3Player RandomEnterPressAudio() => RandomElement(EnterPressAudio);
 
             public List<MP3Player> EnterReleaseAudio = new List<MP3Player>();
             public MP3Player RandomEnterReleaseAudio() => RandomElement(EnterReleaseAudio);
 
-
-
             public List<MP3Player> SpacePressAudio = new List<MP3Player>();
             public MP3Player RandomSpacePressAudio() => RandomElement(SpacePressAudio);
 
             public List<MP3Player> SpaceReleaseAudio = new List<MP3Player>();
             public MP3Player RandomSpaceReleaseAudio() => RandomElement(SpaceReleaseAudio);
-
 
             private dynamic RandomElement(dynamic Element) => Element[Randomizer.Next(Element.Count)];
 
@@ -489,7 +456,6 @@ namespace ClackyClicky
                 }
                 AlredyLoaded = false;
 
-
                 List<MP3Player> Sounds = GetSoundsList();
 
                 foreach (MP3Player Player in Sounds)
@@ -500,8 +466,6 @@ namespace ClackyClicky
                 }
             }
         }
-
-
 
         private static List<Keys> PressedKeys = new List<Keys>();
         private static bool AltTabPressed = false;
@@ -616,7 +580,6 @@ namespace ClackyClicky
                         }
                     }
 
-
                     if (AudioToPlay == null)
                     {
                         AudioToPlay = CurrentSoundPack.RandomGenericReleaseAudio();
@@ -637,11 +600,6 @@ namespace ClackyClicky
             });
         }
 
-
-
-
-
-
         public static bool LockAllKeys { get; set; }
 
         public static event GlobalKeyPressedEventHandler GlobalKeyPressed;
@@ -659,9 +617,7 @@ namespace ClackyClicky
         {
             this.callback = (int nCode, IntPtr wParam, IntPtr lParam) =>
             {
-                HookStruct info = (HookStruct)Marshal.PtrToStructure(lParam, typeof(HookStruct));
-
-                //Console.WriteLine(wParam + "   " + (Keys)Marshal.ReadInt32(lParam));  
+                HookStruct info = (HookStruct)Marshal.PtrToStructure(lParam, typeof(HookStruct));  //Console.WriteLine(wParam + "   " + (Keys)Marshal.ReadInt32(lParam));  
 
                 if (nCode >= 0)
                 {
@@ -688,7 +644,6 @@ namespace ClackyClicky
             _hookID = SetHook(this.callback);
         }
         private IntPtr SetHook(LowLevelKeyboardProc proc) => SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle("user32"), 0);
-
 
         const int WH_KEYBOARD_LL = 13;
 
@@ -724,8 +679,6 @@ namespace ClackyClicky
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
-
-
 
         private void ExitMenuItem_Click(object sender, EventArgs e) => ClackyClicky_FormClosing(sender, new FormClosingEventArgs(CloseReason.UserClosing, false));
         private void ClackyClicky_FormClosing(object sender, FormClosingEventArgs e)
@@ -765,7 +718,6 @@ namespace ClackyClicky
 
             ConfigHelper.WriteConfig(Application.ProductName, "PauseOnGame", PauseOnGameMenuItem.Checked.ToString());
         }
-
 
         private static void AlternAutoRun(bool AutoRun)
         {
@@ -829,8 +781,6 @@ namespace ClackyClicky
             VolumeHelper.SetProgramVolume(VolumeTrackBar.TrackBar.Value);
         }
 
-
-
         private void SaveDelayTimer_Tick(object sender, EventArgs e)
         {
             SaveDelayTimer.Enabled = false;
@@ -891,10 +841,6 @@ namespace ClackyClicky
             };
         }
 
-
-
-
-
         private static IntPtr LastActiveWindowsID = IntPtr.Zero;
         public static event UpdateFocusedApplication FocusChanged;
         public delegate void UpdateFocusedApplication(IntPtr WindowHandle);
@@ -926,11 +872,8 @@ namespace ClackyClicky
                 Thread.Sleep(800);
             }
         }
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)] static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll")] private static extern bool GetWindowRect(IntPtr hWnd, out Rect rect);
-
-
 
         [StructLayout(LayoutKind.Sequential)]
         private struct Rect
