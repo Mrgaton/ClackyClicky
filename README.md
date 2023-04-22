@@ -1,6 +1,6 @@
 # ClackyClicky
 
-[![Build status][img_build]][build]
+[![Build status](https://ci.appveyor.com/api/projects/status/7ct5b4uk3mrr2oc4?svg=true)](https://ci.appveyor.com/project/Mrgaton/clackyclicky)
 [![CodeFactor][img_codefactor]][codefactor]
 [![MIT License][img_license]][license]
 
@@ -13,7 +13,6 @@ Thanks for checking out ClackyClicky!
 A copy of kbs.im but built-in in an app for using it on all the apps on windows
 
 
-[build]: https://ci.appveyor.com/project/Mrgaton/ClackyClicky/branch/master
 [codefactor]: https://www.codefactor.io/repository/github/Mrgaton/ClackyClicky/overview/master
 [issues]: https://github.com/mkaring/Mrgaton/ClackyClicky
 [license]: LICENSE.md
