@@ -19,6 +19,7 @@
     <Title>ClackyClicky</Title>
     <Authors>Mrgaton</Authors>
     <Company>TnfCorp</Company>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
