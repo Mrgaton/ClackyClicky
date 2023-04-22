@@ -133,7 +133,7 @@ namespace ClackyClicky
 
             if (KeysSoundPacks.Count() <= 0)
             {
-                MessageBox.Show("Error no se encontraron ningun pack de teclas :C",Application.ProductName,MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("Error no se encontraron ningun pack de teclas :C", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(1);
             }
 
@@ -299,23 +299,23 @@ namespace ClackyClicky
 
             Parallel.For(0, ValidSoundsDirs.Count(), item =>
             {
-            try
-            {
-                string KeysDir = ValidSoundsDirs[item];
-
-                Console.WriteLine("Loading soundpack:" + KeysDir.Split('\\').Last());
-
-                SoundPack SndPack = new SoundPack();
-
-                SndPack.KeysName = KeysDir.Split('\\').Last();
-
-                //Hacer esto con parallels para que se inicie el programa mas rapido
-
-                string[] SoundDirs = Directory.GetDirectories(KeysDir);
-
-                foreach (string SoundDir in SoundDirs)
+                try
                 {
-                    PressType SoundDirType = SoundDir.ToLower().EndsWith("press") ? PressType.Press : PressType.Release;
+                    string KeysDir = ValidSoundsDirs[item];
+
+                    Console.WriteLine("Loading soundpack:" + KeysDir.Split('\\').Last());
+
+                    SoundPack SndPack = new SoundPack();
+
+                    SndPack.KeysName = KeysDir.Split('\\').Last();
+
+                    //Hacer esto con parallels para que se inicie el programa mas rapido
+
+                    string[] SoundDirs = Directory.GetDirectories(KeysDir);
+
+                    foreach (string SoundDir in SoundDirs)
+                    {
+                        PressType SoundDirType = SoundDir.ToLower().EndsWith("press") ? PressType.Press : PressType.Release;
 
                         string[] Audios = Directory.GetFiles(SoundDir);
 
@@ -355,7 +355,7 @@ namespace ClackyClicky
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show(ex.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             });
         }
@@ -390,7 +390,7 @@ namespace ClackyClicky
             public List<MP3Player> SpaceReleaseAudio = new List<MP3Player>();
             public MP3Player RandomSpaceReleaseAudio() => RandomElement(SpaceReleaseAudio);
             private dynamic RandomElement(dynamic Element) => (Element.Count > 0 ? Element[Randomizer.Next(Element.Count)] : null);
-            
+
             public List<MP3Player> GetSoundsList()
             {
                 List<MP3Player> Sounds = new List<MP3Player>();
@@ -509,7 +509,7 @@ namespace ClackyClicky
                         Console.WriteLine($"[{DateTime.Now}]: Released {Key}" + Environment.NewLine);
                     }
 
-                    MP3Player AudioToPlay = GetPlayerPerKey(Key,CurrentSoundPack,PressType.Release);
+                    MP3Player AudioToPlay = GetPlayerPerKey(Key, CurrentSoundPack, PressType.Release);
 
                     if (AudioToPlay == null)
                     {
@@ -530,9 +530,9 @@ namespace ClackyClicky
             });
         }
 
-        private static MP3Player GetPlayerPerKey(Keys Key,SoundPack SndPack ,PressType PType)
+        private static MP3Player GetPlayerPerKey(Keys Key, SoundPack SndPack, PressType PType)
         {
-            switch(Key)
+            switch (Key)
             {
                 case Keys.Back:
                     return (PType == PressType.Press ? SndPack.RandomBackspacePressAudio() : SndPack.RandomBackspaceReleaseAudio());
@@ -773,7 +773,6 @@ namespace ClackyClicky
         }
 
         private static bool FullScreen = false;
-
 
         Process[] ExplorerProcesses = Process.GetProcessesByName("explorer").Where(Proc => Proc.MainWindowHandle != IntPtr.Zero).ToArray();
         private void ClackyClicky_Load(object sender, EventArgs e)
