@@ -72,8 +72,6 @@ namespace ClackyClicky
 
             return false;
         }
-
-
         public static bool StrartupProgramExist(string AppName)
         {
             return StrartupProgramExist(Registry.CurrentUser, AppName);
@@ -95,18 +93,11 @@ namespace ClackyClicky
                 {
                     if (key != null)
                     {
-                        Object o = key.GetValue(Value);
-                        if (o != null)
-                        {
-                            return o;
-                        }
+                        return key.GetValue(Value);
                     }
                 }
             }
-            catch (Exception ex)  //just for demonstration...it's always best to handle specific exceptions
-            {
-                //react appropriately
-            }
+            catch (Exception ex) { }
 
             return null;
         }

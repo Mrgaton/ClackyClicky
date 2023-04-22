@@ -20,7 +20,6 @@ namespace ClackyClicky
         public static bool UACEnabled = (int)Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System").GetValue("EnableLUA") == 1;
         public static bool Admin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 
-
         [STAThread]
         static void Main(string[] args)
         {
@@ -55,10 +54,7 @@ namespace ClackyClicky
                             OriginalProcess.Kill();
                         }
                     }
-                    catch
-                    {
-
-                    }
+                    catch { }
                 }
                 else if (args[0] == "/FixDesigner")
                 {
@@ -83,8 +79,6 @@ namespace ClackyClicky
 
                 Environment.Exit(0);
             }
-
-
 
             if (Process.GetProcessesByName(Application.ProductName).Where(p => p.MainModule.FileName.ToLower().Trim() == ProgramPath.ToLower().Trim() & p.Id != CurrentProcess.Id).Count() > 0)
             {
@@ -113,10 +107,7 @@ namespace ClackyClicky
 
                 return true;
             }
-            catch (Win32Exception)
-            {
-                // User canceled
-            }
+            catch (Win32Exception) { }// User canceled
 
             return false;
         }
@@ -149,8 +140,6 @@ namespace ClackyClicky
                 Directory.CreateDirectory(ShortcutFolder);
             }
 
-
-
             WshShell shell = new WshShell();
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(Path.Combine(ShortcutFolder, Application.ProductName + ".lnk"));
 
@@ -158,7 +147,6 @@ namespace ClackyClicky
             shortcut.IconLocation = ProgramPath;
             shortcut.TargetPath = ProgramPath;
             shortcut.Save();
-
 
             if (!File.Exists(Path.Combine(ShortcutFolder, "ClickyClacky.lnk")))
             {

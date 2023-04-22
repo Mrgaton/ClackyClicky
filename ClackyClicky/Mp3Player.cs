@@ -24,7 +24,6 @@ namespace ClackyClicky
             }
         }
 
-
         public void Unload()
         {
             if (reader != null)

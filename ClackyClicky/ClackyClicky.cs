@@ -547,7 +547,6 @@ namespace ClackyClicky
                         if (CurrentSoundPack.EnterPressAudio.Count() > 0)
                         {
                             AudioToPlay = CurrentSoundPack.RandomEnterPressAudio();
-
                         }
                     }
                     else if (Key == Keys.Space)
@@ -905,7 +904,6 @@ namespace ClackyClicky
             {
                 try
                 {
-
                     IntPtr CurrentActiveWindow = GetForegroundWindow();
 
                     if (CurrentActiveWindow != IntPtr.Zero)
