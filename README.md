@@ -15,12 +15,12 @@ A copy of kbs.im but built-in in an app for using it on all the apps on windows
 
 
 [build]: https://ci.appveyor.com/project/Mrgaton/ClackyClicky/branch/master
-[codefactor]: https://www.codefactor.io/repository/github/mrgaton/clackyclicky/badge
+[codefactor]: https://www.codefactor.io/repository/github/Mrgaton/ClackyClicky/overview/master
 [issues]: https://github.com/mkaring/Mrgaton/ClackyClicky
 [license]: LICENSE.md
 [project_format]: docs/ProjectFormat.md
 
 [img_build]: https://img.shields.io/appveyor/ci/Mrgaton/ClackyClicky/master.svg?style=flat
-[img_codefactor]: https://www.codefactor.io/repository/Mrgaton/ClackyClicky/confuserex/badge/master
+[img_codefactor]: https://www.codefactor.io/repository/github/mrgaton/clackyclicky/badge
 [img_gitter]: https://img.shields.io/gitter/room/Mrgaton/ClackyClicky.svg?style=flat
 [img_license]: https://img.shields.io/github/license/Mrgaton/ClackyClicky.svg?style=flat
