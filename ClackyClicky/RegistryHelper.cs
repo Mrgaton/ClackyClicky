@@ -13,7 +13,6 @@ namespace ClackyClicky
             Hive.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).SetValue(AppName, AppPath, RegistryValueKind.String);
         }
 
-
         public static string ReadAutoStartProgram(string AppName)
         {
             return ReadAutoStartProgram(Registry.CurrentUser, AppName);
@@ -22,7 +21,6 @@ namespace ClackyClicky
         {
             return Hive.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", false).GetValue(AppName).ToString();
         }
-
 
         public static void RemoveAutoStartProgram(string AppName)
         {
@@ -36,7 +34,6 @@ namespace ClackyClicky
             }
         }
 
-
         public static void AcceptAutoRunRegedit(string AplicationRegeditName)
         {
             AcceptAutoRunRegedit(Registry.CurrentUser, AplicationRegeditName);
@@ -46,7 +43,6 @@ namespace ClackyClicky
             Hive.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run", true).SetValue(AplicationRegeditName, new byte[] { 0002, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00 }, RegistryValueKind.Binary);
         }
 
-
         public static void DisableAutoRunRegedit(string AplicationRegeditName)
         {
             DisableAutoRunRegedit(Registry.CurrentUser, AplicationRegeditName);
@@ -55,7 +51,6 @@ namespace ClackyClicky
         {
             Hive.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run", true).SetValue(AplicationRegeditName, new byte[] { 0099, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99 }, RegistryValueKind.Binary);
         }
-
 
         public static bool StrartupProgramDisabled(string AppName)
         {

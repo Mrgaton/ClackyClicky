@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace ClackyClicky
@@ -129,6 +130,12 @@ namespace ClackyClicky
             this.VolumeTrackBar.TrackBar.Value = SavedVolume;
 
             LoadKeysAudio();
+
+            if (KeysSoundPacks.Count() <= 0)
+            {
+                MessageBox.Show("Error no se encontraron ningun pack de teclas :C",Application.ProductName,MessageBoxButtons.OK,MessageBoxIcon.Error);
+                Environment.Exit(1);
+            }
 
             foreach (SoundPack SndPack in KeysSoundPacks)
             {
@@ -292,23 +299,23 @@ namespace ClackyClicky
 
             Parallel.For(0, ValidSoundsDirs.Count(), item =>
             {
-                try
+            try
+            {
+                string KeysDir = ValidSoundsDirs[item];
+
+                Console.WriteLine("Loading soundpack:" + KeysDir.Split('\\').Last());
+
+                SoundPack SndPack = new SoundPack();
+
+                SndPack.KeysName = KeysDir.Split('\\').Last();
+
+                //Hacer esto con parallels para que se inicie el programa mas rapido
+
+                string[] SoundDirs = Directory.GetDirectories(KeysDir);
+
+                foreach (string SoundDir in SoundDirs)
                 {
-                    string KeysDir = ValidSoundsDirs[item];
-
-                    Console.WriteLine("Loading soundpack:" + KeysDir.Split('\\').Last());
-
-                    SoundPack SndPack = new SoundPack();
-
-                    SndPack.KeysName = KeysDir.Split('\\').Last();
-
-                    //Hacer esto con parallels para que se inicie el programa mas rapido
-
-                    string[] SoundDirs = Directory.GetDirectories(KeysDir);
-
-                    foreach (string SoundDir in SoundDirs)
-                    {
-                        PressType SoundDirType = SoundDir.EndsWith("press") ? PressType.Press : PressType.Release;
+                    PressType SoundDirType = SoundDir.ToLower().EndsWith("press") ? PressType.Press : PressType.Release;
 
                         string[] Audios = Directory.GetFiles(SoundDir);
 
@@ -326,47 +333,19 @@ namespace ClackyClicky
 
                                 if (AudioName.ToUpper().StartsWith("GENERIC"))
                                 {
-                                    if (SoundDirType == PressType.Press)
-                                    {
-                                        SndPack.GenericPressAudio.Add(Player);
-                                    }
-                                    else if (SoundDirType == PressType.Release)
-                                    {
-                                        SndPack.GenericReleaseAudio.Add(Player);
-                                    }
+                                    (SoundDirType == PressType.Press ? SndPack.GenericPressAudio : SndPack.GenericReleaseAudio).Add(Player);
                                 }
                                 else if (AudioName.ToUpper().StartsWith("BACKSPACE"))
                                 {
-                                    if (SoundDirType == PressType.Press)
-                                    {
-                                        SndPack.BackspacePressAudio.Add(Player);
-                                    }
-                                    else if (SoundDirType == PressType.Release)
-                                    {
-                                        SndPack.BackspaceReleaseAudio.Add(Player);
-                                    }
+                                    (SoundDirType == PressType.Press ? SndPack.BackspacePressAudio : SndPack.BackspaceReleaseAudio).Add(Player);
                                 }
                                 else if (AudioName.ToUpper().StartsWith("ENTER"))
                                 {
-                                    if (SoundDirType == PressType.Press)
-                                    {
-                                        SndPack.EnterPressAudio.Add(Player);
-                                    }
-                                    else if (SoundDirType == PressType.Release)
-                                    {
-                                        SndPack.EnterReleaseAudio.Add(Player);
-                                    }
+                                    (SoundDirType == PressType.Press ? SndPack.EnterPressAudio : SndPack.EnterReleaseAudio).Add(Player);
                                 }
                                 else if (AudioName.ToUpper().StartsWith("SPACE"))
                                 {
-                                    if (SoundDirType == PressType.Press)
-                                    {
-                                        SndPack.SpacePressAudio.Add(Player);
-                                    }
-                                    else if (SoundDirType == PressType.Release)
-                                    {
-                                        SndPack.SpaceReleaseAudio.Add(Player);
-                                    }
+                                    (SoundDirType == PressType.Press ? SndPack.SpacePressAudio : SndPack.SpaceReleaseAudio).Add(Player);
                                 }
                             }
                         }
@@ -410,9 +389,8 @@ namespace ClackyClicky
 
             public List<MP3Player> SpaceReleaseAudio = new List<MP3Player>();
             public MP3Player RandomSpaceReleaseAudio() => RandomElement(SpaceReleaseAudio);
-
-            private dynamic RandomElement(dynamic Element) => Element[Randomizer.Next(Element.Count)];
-
+            private dynamic RandomElement(dynamic Element) => (Element.Count > 0 ? Element[Randomizer.Next(Element.Count)] : null);
+            
             public List<MP3Player> GetSoundsList()
             {
                 List<MP3Player> Sounds = new List<MP3Player>();
@@ -436,7 +414,6 @@ namespace ClackyClicky
                     return;
                 }
                 AlredyLoaded = true;
-
 
                 List<MP3Player> Sounds = GetSoundsList();
 
@@ -471,16 +448,16 @@ namespace ClackyClicky
         private static bool AltTabPressed = false;
         private void KeyboardHook_GlobalKeyPressed(Keys Key)
         {
+            if (PauseOnGameMenuItem.Checked)
+            {
+                if (Key == Keys.Tab & PressedKeys.Contains(Keys.LMenu))
+                {
+                    AltTabPressed = true;
+                }
+            }
+
             Task.Factory.StartNew(() =>
             {
-                if (PauseOnGameMenuItem.Checked)
-                {
-                    if (Key == Keys.Tab & PressedKeys.Contains(Keys.LMenu))
-                    {
-                        AltTabPressed = true;
-                    }
-                }
-
                 try
                 {
                     if (PressedKeys.Contains(Key))
@@ -497,29 +474,7 @@ namespace ClackyClicky
                         Console.WriteLine($"[{DateTime.Now}]: Press {Key}" + Environment.NewLine);
                     }
 
-                    MP3Player AudioToPlay = null;
-
-                    if (Key == Keys.Back)
-                    {
-                        if (CurrentSoundPack.BackspacePressAudio.Count() > 0)
-                        {
-                            AudioToPlay = CurrentSoundPack.RandomBackspacePressAudio();
-                        }
-                    }
-                    else if (Key == Keys.Enter)
-                    {
-                        if (CurrentSoundPack.EnterPressAudio.Count() > 0)
-                        {
-                            AudioToPlay = CurrentSoundPack.RandomEnterPressAudio();
-                        }
-                    }
-                    else if (Key == Keys.Space)
-                    {
-                        if (CurrentSoundPack.SpacePressAudio.Count() > 0)
-                        {
-                            AudioToPlay = CurrentSoundPack.RandomSpacePressAudio();
-                        }
-                    }
+                    MP3Player AudioToPlay = GetPlayerPerKey(Key, CurrentSoundPack, PressType.Press);
 
                     if (AudioToPlay == null)
                     {
@@ -527,8 +482,6 @@ namespace ClackyClicky
                     }
 
                     AudioToPlay.Play();
-
-                    AudioToPlay = null;
                 }
                 catch (Exception ex)
                 {
@@ -556,29 +509,7 @@ namespace ClackyClicky
                         Console.WriteLine($"[{DateTime.Now}]: Released {Key}" + Environment.NewLine);
                     }
 
-                    MP3Player AudioToPlay = null;
-
-                    if (Key == Keys.Back)
-                    {
-                        if (CurrentSoundPack.BackspaceReleaseAudio.Count() > 0)
-                        {
-                            AudioToPlay = CurrentSoundPack.RandomBackspaceReleaseAudio();
-                        }
-                    }
-                    else if (Key == Keys.Enter)
-                    {
-                        if (CurrentSoundPack.EnterReleaseAudio.Count() > 0)
-                        {
-                            AudioToPlay = CurrentSoundPack.RandomEnterReleaseAudio();
-                        }
-                    }
-                    else if (Key == Keys.Space)
-                    {
-                        if (CurrentSoundPack.SpaceReleaseAudio.Count() > 0)
-                        {
-                            AudioToPlay = CurrentSoundPack.RandomSpaceReleaseAudio();
-                        }
-                    }
+                    MP3Player AudioToPlay = GetPlayerPerKey(Key,CurrentSoundPack,PressType.Release);
 
                     if (AudioToPlay == null)
                     {
@@ -586,7 +517,6 @@ namespace ClackyClicky
                     }
 
                     AudioToPlay.Play();
-                    AudioToPlay = null;
 
                     if (PressedKeys.Contains(Key))
                     {
@@ -599,6 +529,24 @@ namespace ClackyClicky
                 }
             });
         }
+
+        private static MP3Player GetPlayerPerKey(Keys Key,SoundPack SndPack ,PressType PType)
+        {
+            switch(Key)
+            {
+                case Keys.Back:
+                    return (PType == PressType.Press ? SndPack.RandomBackspacePressAudio() : SndPack.RandomBackspaceReleaseAudio());
+
+                case Keys.Enter:
+                    return (PType == PressType.Press ? SndPack.RandomEnterPressAudio() : SndPack.RandomEnterReleaseAudio());
+
+                case Keys.Space:
+                    return (PType == PressType.Press ? SndPack.RandomSpacePressAudio() : SndPack.RandomSpaceReleaseAudio());
+            }
+
+            return (PType == PressType.Press ? SndPack.RandomGenericPressAudio() : SndPack.RandomGenericReleaseAudio());
+        }
+
 
         public static bool LockAllKeys { get; set; }
 
@@ -696,7 +644,6 @@ namespace ClackyClicky
 
         private void TrashTruckTimer_Tick(object sender, EventArgs e) => GC.Collect();
 
-
         private void RunOnStartUpMenuItem_Click(object sender, EventArgs e)
         {
             RunOnStartUpMenuItem.Checked = !RunOnStartUpMenuItem.Checked;
@@ -785,6 +732,11 @@ namespace ClackyClicky
         {
             SaveDelayTimer.Enabled = false;
 
+            if (CurrentSoundPack == null)
+            {
+                return;
+            }
+
             ConfigHelper.WriteConfig(Application.ProductName, "KeysVolume", VolumeTrackBar.TrackBar.Value.ToString());
 
             ConfigHelper.WriteConfig(Application.ProductName, "SelectedSoundPack", CurrentSoundPack.KeysName);
@@ -820,8 +772,10 @@ namespace ClackyClicky
             SaveDelayTimer.Enabled = true;
         }
 
-
         private static bool FullScreen = false;
+
+
+        Process[] ExplorerProcesses = Process.GetProcessesByName("explorer").Where(Proc => Proc.MainWindowHandle != IntPtr.Zero).ToArray();
         private void ClackyClicky_Load(object sender, EventArgs e)
         {
             if (PauseOnGameMenuItem.Checked)
@@ -831,6 +785,11 @@ namespace ClackyClicky
 
             FocusChanged += (IntPtr WindowHandle) =>
             {
+                if (ExplorerProcesses.Any(Proc => Proc.MainWindowHandle == WindowHandle))
+                {
+                    return; //We dont want to check if explorer its on full screen xd
+                }
+
                 Screen ProcessScreen = Screen.FromHandle(WindowHandle);
 
                 GetWindowRect(WindowHandle, out Rect ProcessRectangle);
