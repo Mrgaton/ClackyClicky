@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/7ct5b4uk3mrr2oc4?svg=true)](https://ci.appveyor.com/project/Mrgaton/clackyclicky)
 [![CodeFactor][img_codefactor]][codefactor]
 [![MIT License][img_license]][license]
-![visitors](https://visitor-badge.laobi.icu/badge?page_id=madushadhanushka.madushadhanushka)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=Mrgaton.ClackyClicky)
 
 Welcome to ClackyClicky, a program that simulates the sound of a mechanical keyboard. Every time you press a key, you'll hear the satisfying click of a mechanical switch.
 
