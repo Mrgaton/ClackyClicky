@@ -12,6 +12,7 @@ Thanks for checking out ClackyClicky!
 
 A copy of kbs.im but built-in in an app for using it on all the apps on windows
 
+<img src="https://github-readme-stats.vercel.app/api/top-langs?username=Mrgaton&show_icons=true&locale=en&layout=compact&theme=chartreuse-dark" alt="ovi" />
 
 [codefactor]: https://www.codefactor.io/repository/github/Mrgaton/ClackyClicky/overview/master
 [issues]: https://github.com/mkaring/Mrgaton/ClackyClicky
