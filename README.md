@@ -3,7 +3,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/7ct5b4uk3mrr2oc4?svg=true)](https://ci.appveyor.com/project/Mrgaton/clackyclicky)
 [![CodeFactor][img_codefactor]][codefactor]
 [![MIT License][img_license]][license]
-[![Visitors][img_visitors]][visitors]
 
 Welcome to ClackyClicky, a program that simulates the sound of a mechanical keyboard. Every time you press a key, you'll hear the satisfying click of a mechanical switch.
 
@@ -17,7 +16,6 @@ A copy of kbs.im but built-in in an app for using it on all the apps on windows
 <img src="https://github-readme-stats.vercel.app/api/top-langs?username=Mrgaton&show_icons=true&locale=en&layout=compact&theme=chartreuse-dark" alt="ovi" />
 [codefactor]: https://www.codefactor.io/repository/github/Mrgaton/ClackyClicky/overview/master
 [issues]: https://github.com/mkaring/Mrgaton/ClackyClicky
-[visitors]: https://visitor-badge.laobi.icu/badge?page_id=Mrgaton.ClackyClicky
 [license]: LICENSE.md
 [project_format]: docs/ProjectFormat.md
 
@@ -25,4 +23,3 @@ A copy of kbs.im but built-in in an app for using it on all the apps on windows
 [img_codefactor]: https://www.codefactor.io/repository/github/mrgaton/clackyclicky/badge
 [img_gitter]: https://img.shields.io/gitter/room/Mrgaton/ClackyClicky.svg?style=flat
 [img_license]: https://img.shields.io/github/license/Mrgaton/ClackyClicky.svg?style=flat
-[img_visitors]: README.md
