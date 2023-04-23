@@ -13,7 +13,6 @@ Thanks for checking out ClackyClicky!
 A copy of kbs.im but built-in in an app for using it on all the apps on windows
 
 
-<img src="https://github-readme-stats.vercel.app/api/top-langs?username=Mrgaton&show_icons=true&locale=en&layout=compact&theme=chartreuse-dark" alt="ovi" />
 [codefactor]: https://www.codefactor.io/repository/github/Mrgaton/ClackyClicky/overview/master
 [issues]: https://github.com/mkaring/Mrgaton/ClackyClicky
 [license]: LICENSE.md
@@ -23,3 +22,5 @@ A copy of kbs.im but built-in in an app for using it on all the apps on windows
 [img_codefactor]: https://www.codefactor.io/repository/github/mrgaton/clackyclicky/badge
 [img_gitter]: https://img.shields.io/gitter/room/Mrgaton/ClackyClicky.svg?style=flat
 [img_license]: https://img.shields.io/github/license/Mrgaton/ClackyClicky.svg?style=flat
+
+<img src="https://github-readme-stats.vercel.app/api/top-langs?username=Mrgaton&show_icons=true&locale=en&layout=compact&theme=chartreuse-dark" alt="ovi" />
