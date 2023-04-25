@@ -5,7 +5,7 @@
 [![MIT License][img_license]][license]
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=Mrgaton.ClackyClicky)
 
-[codefactor]: https://www.codefactor.io/repository/github/Mrgaton/ClackyClicky/overview/master
+[codefactor]: https://www.codefactor.io/repository/github/Mrgaton/ClackyClicky/overview
 [issues]: https://github.com/mkaring/Mrgaton/ClackyClicky
 [license]: LICENSE.md
 [project_format]: docs/ProjectFormat.md
