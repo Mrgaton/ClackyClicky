@@ -2,6 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/7ct5b4uk3mrr2oc4?svg=true)](https://ci.appveyor.com/project/Mrgaton/clackyclicky)
 [![CodeFactor][img_codefactor]][codefactor]
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/fe6f2024150c4d9492076a4da1a6ccfa)](https://app.codacy.com/gh/Mrgaton/ClackyClicky)
 [![MIT License][img_license]][license]
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=Mrgaton.ClackyClicky)
 
