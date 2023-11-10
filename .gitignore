@@ -5,3 +5,7 @@
 /.vs/ClackyClicky/FileContentIndex
 /ClackyClicky/bin/Release/net7.0-windows
 /ClackyClicky/obj/Release/net7.0-windows
+/.vs
+/ClackyClicky/bin/Debug/net7.0-windows
+/ClackyClicky/obj/Debug/net7.0-windows
+/ClackyClicky/obj
