@@ -73,6 +73,8 @@ namespace ClackyClicky
                 }
             }
 
+
+
             if (!UACEnabled && !Admin)
             {
                 RunElevated(ProgramPath, "/Elevated " + CurrentProcess.Id);
@@ -92,15 +94,15 @@ namespace ClackyClicky
             Application.Run(new ClackyClicky());
         }
 
-        public static bool RunElevated(string FileName, string Arguments = null)
+        public static bool RunElevated(string fileName, string arguments = default)
         {
             ProcessStartInfo processInfo = new ProcessStartInfo();
 
             processInfo.UseShellExecute = true;
             processInfo.Verb = "runas";
 
-            processInfo.FileName = FileName;
-            processInfo.Arguments = Arguments;
+            processInfo.FileName = fileName;
+            processInfo.Arguments = arguments;
 
             try
             {
@@ -113,9 +115,9 @@ namespace ClackyClicky
             return false;
         }
 
-        private static void AlternUAC(bool EnableLua)
+        private static void AlternUAC(bool enableLua)
         {
-            Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", true).SetValue("EnableLUA", EnableLua ? 1 : 0, RegistryValueKind.DWord);
+            Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", true).SetValue("EnableLUA", enableLua ? 1 : 0, RegistryValueKind.DWord);
         }
 
         private static bool RunningWithConsole()

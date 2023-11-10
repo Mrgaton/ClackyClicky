@@ -5,18 +5,17 @@ namespace ClackyClicky
     public class MP3Player
     {
         public string AudioFilePath { get; set; }
-
         public MP3Player(string audioFilePath) => AudioFilePath = audioFilePath;
 
         private Mp3FileReader? reader;
         private WaveOutEvent? waveOut;
 
-        public void Open(string FileName)
+        public void Open(string fileName)
         {
             if (reader != null) reader.Dispose();
             if (waveOut != null) waveOut.Dispose();
 
-            AudioFilePath = FileName;
+            AudioFilePath = fileName;
 
             reader = null;
             waveOut = null;
@@ -27,7 +26,6 @@ namespace ClackyClicky
             if (AudioFilePath == null) throw new Exception("Open audio file frist");
             if (reader == null) reader = new Mp3FileReader(new MemoryStream(File.ReadAllBytes(AudioFilePath), false));
         }
-
         public void Play()
         {
             if (reader == null) Load();

@@ -2,10 +2,7 @@
 # Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/ClackyClicky/FileContentIndex
-/ClackyClicky/bin/Release/net7.0-windows
-/ClackyClicky/obj/Release/net7.0-windows
 /.vs
-/ClackyClicky/bin/Debug/net7.0-windows
-/ClackyClicky/obj/Debug/net7.0-windows
+/ClackyClicky/bin
 /ClackyClicky/obj
+/ClackyClicky/obj/Debug/net7.0-windows/ref/ClackyClicky.dll

@@ -122,7 +122,7 @@ namespace ClackyClicky
             /*var prop = (new MMDeviceEnumerator()).GetDefaultAudioEndpoint(DataFlow.Render, Role.Console).AudioClient.MixFormat;
 
             WaveOutEvent outputDevice = new WaveOutEvent();
-
+            
             mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(prop.SampleRate, prop.Channels))
             {
                 ReadFully = true,
@@ -130,6 +130,8 @@ namespace ClackyClicky
 
             outputDevice.Init(mixer);
             outputDevice.Play();*/
+
+
 
             foreach (SoundPack SndPack in KeysSoundPacks)
             {
@@ -196,21 +198,13 @@ namespace ClackyClicky
 
         public class MenuColorTable : ProfessionalColorTable
         {
-            public MenuColorTable()
-            { UseSystemColors = false; }
-
-            public override Color ImageMarginGradientEnd
-            { get { return Color.FromArgb(27, 27, 27); } }
-            public override Color ImageMarginGradientBegin
-            { get { return Color.FromArgb(22, 22, 22); } }
-            public override Color ImageMarginGradientMiddle
-            { get { return Color.Black; } }
-            public override Color MenuBorder
-            { get { return Color.Gray; } }
-            public override Color MenuItemBorder
-            { get { return Color.Gray; } }
-            public override Color MenuItemSelected
-            { get { return Color.Cornsilk; } }
+            public MenuColorTable() { UseSystemColors = false; }
+            public override Color ImageMarginGradientEnd { get { return Color.FromArgb(27, 27, 27); } }
+            public override Color ImageMarginGradientBegin { get { return Color.FromArgb(22, 22, 22); } }
+            public override Color ImageMarginGradientMiddle { get { return Color.Black; } }
+            public override Color MenuBorder { get { return Color.Gray; } }
+            public override Color MenuItemBorder { get { return Color.Gray; } }
+            public override Color MenuItemSelected { get { return Color.Cornsilk; } }
         }
 
         private Image InvertImage(Image image)
@@ -358,7 +352,6 @@ namespace ClackyClicky
             public MP3Player RandomSpaceReleaseAudio() => RandomElement(SpaceReleaseAudio);
 
             private Dictionary<int, int> lastPlayed = new Dictionary<int, int>();
-
             private dynamic RandomElement(dynamic element)
             {
                 int elementCounts = element.Count;
@@ -395,7 +388,6 @@ namespace ClackyClicky
             }
 
             public async Task LoadSoundsAsync() => await Task.Run(LoadSounds);
-
             public void LoadSounds()
             {
                 if (AlredyLoaded) return;
@@ -442,6 +434,7 @@ namespace ClackyClicky
                     AltTabPressed = true;
                 }
             }
+
 
             if (VolumeHelper.CurrentVolume > 0)
             {
