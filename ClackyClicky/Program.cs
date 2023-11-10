@@ -18,7 +18,7 @@ namespace ClackyClicky
         public static Icon ProgramIco = Icon.ExtractAssociatedIcon(ProgramPath);
 
         public static bool UACEnabled = (int)Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System").GetValue("EnableLUA") == 1;
-        public static bool Admin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+        public static bool admin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 
         [STAThread]
         private static void Main(string[] args)
@@ -75,7 +75,7 @@ namespace ClackyClicky
 
 
 
-            if (!UACEnabled && !Admin)
+            if (!UACEnabled && !admin)
             {
                 RunElevated(ProgramPath, "/Elevated " + CurrentProcess.Id);
 
@@ -133,7 +133,7 @@ namespace ClackyClicky
 
         private static void CreateShortcut()
         {
-            if (!Admin)
+            if (!admin)
             {
                 return;
             }

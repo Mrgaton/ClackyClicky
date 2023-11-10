@@ -5,7 +5,7 @@ namespace ClackyClicky
 {
     public partial class ClackyClicky : Form
     {
-        public static readonly string DefaultSoundPackName = "cream";
+        public static readonly string defaultSoundPackName = "cream";
 
         /*public static MixingSampleProvider mixer = null;
         public static void PlayAudio(byte[] audioData) => mixer.AddMixerInput(GetSampleProvider(mixer, audioData));
@@ -65,30 +65,27 @@ namespace ClackyClicky
 
             Task.Factory.StartNew(() =>
             {
-                bool CreateKey = false;
+                bool createKey = false;
 
                 if (!RegistryHelper.StrartupProgramExist(Application.ProductName))
                 {
-                    CreateKey = true;
+                    createKey = true;
                 }
                 else if (!RegistryHelper.ReadAutoStartProgram(Application.ProductName).ToLower().Trim().Contains(Program.ProgramPath.ToLower().Trim()))
                 {
-                    CreateKey = true;
+                    createKey = true;
                 }
 
-                if (CreateKey)
-                {
-                    RegistryHelper.CreateAutoStartProgram(Application.ProductName, Program.ProgramPath);
-                }
+                if (createKey) RegistryHelper.CreateAutoStartProgram(Application.ProductName, Program.ProgramPath);
             });
 
             TrayMenuStrip.Items.Insert(0, new ToolStripLabel(Application.ProductName) { Image = Program.ProgramIco.ToBitmap() });
 
-            bool AutoRunActivated = false;
+            bool autoRunEnabled = false;
 
-            if (RegistryHelper.StrartupProgramExist(Application.ProductName)) AutoRunActivated = !RegistryHelper.StrartupProgramDisabled(Application.ProductName);
+            if (RegistryHelper.StrartupProgramExist(Application.ProductName)) autoRunEnabled = !RegistryHelper.StrartupProgramDisabled(Application.ProductName);
 
-            RunOnStartUpMenuItem.Checked = AutoRunActivated;
+            RunOnStartUpMenuItem.Checked = autoRunEnabled;
 
             DisableUACMenuItem.Checked = !Program.UACEnabled;
 
@@ -97,23 +94,23 @@ namespace ClackyClicky
 
             if (WindowsTheme.CurrentWindowsTheme == WindowsTheme.WindowsThemeMode.DarkTheme) LoadBlackTheme();
 
-            string PauseOnGame = ConfigHelper.ReadConfig(Application.ProductName, "PauseOnGame");
+            string pauseOnGame = ConfigHelper.ReadConfig(Application.ProductName, "pauseOnGame");
 
-            if (!string.IsNullOrWhiteSpace(PauseOnGame)) PauseOnGameMenuItem.Checked = bool.TryParse(PauseOnGame, out bool Pause) ? Pause : false;
+            if (!string.IsNullOrWhiteSpace(pauseOnGame)) PauseOnGameMenuItem.Checked = bool.TryParse(pauseOnGame, out bool Pause) ? Pause : false;
 
-            string VolumeSavedString = ConfigHelper.ReadConfig(Application.ProductName, "KeysVolume");
+            string volumeSavedString = ConfigHelper.ReadConfig(Application.ProductName, "KeysVolume");
 
-            int SavedVolume = 50;
+            int savedVolume = 50;
 
-            if (!string.IsNullOrWhiteSpace(VolumeSavedString)) int.TryParse(VolumeSavedString, out SavedVolume);
+            if (!string.IsNullOrWhiteSpace(volumeSavedString)) int.TryParse(volumeSavedString, out savedVolume);
 
-            VolumeHelper.SetProgramVolume(SavedVolume);
+            VolumeHelper.SetProgramVolume(savedVolume);
 
-            this.VolumeTrackBar.TrackBar.Value = SavedVolume;
+            this.VolumeTrackBar.TrackBar.Value = savedVolume;
 
             LoadKeysAudio();
 
-            if (KeysSoundPacks.Count() <= 0)
+            if (keysSoundPacks.Count() <= 0)
             {
                 MessageBox.Show("Error no se encontraron ningun pack de teclas :C", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(1);
@@ -122,7 +119,7 @@ namespace ClackyClicky
             /*var prop = (new MMDeviceEnumerator()).GetDefaultAudioEndpoint(DataFlow.Render, Role.Console).AudioClient.MixFormat;
 
             WaveOutEvent outputDevice = new WaveOutEvent();
-            
+
             mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(prop.SampleRate, prop.Channels))
             {
                 ReadFully = true,
@@ -131,16 +128,12 @@ namespace ClackyClicky
             outputDevice.Init(mixer);
             outputDevice.Play();*/
 
+            keysSoundPacks.ForEach(sndPack => SoundPackComboBox.Items.Add("Teclas " + sndPack.KeysName + ((sndPack.EnterPressAudio.Count() > 0) ? " ⭐" : null)));
 
-
-            foreach (SoundPack SndPack in KeysSoundPacks)
-            {
-                SoundPackComboBox.Items.Add("Teclas " + SndPack.KeysName + ((SndPack.EnterPressAudio.Count() > 0) ? " ⭐" : null));
-            }
 
             string SoundPackSavedString = ConfigHelper.ReadConfig(Application.ProductName, "SelectedSoundPack");
 
-            if (string.IsNullOrWhiteSpace(SoundPackSavedString)) SoundPackSavedString = DefaultSoundPackName;
+            if (string.IsNullOrWhiteSpace(SoundPackSavedString)) SoundPackSavedString = defaultSoundPackName;
 
             for (int i = 0; i < 2; i++)
             {
@@ -148,11 +141,11 @@ namespace ClackyClicky
 
                 try
                 {
-                    currentSoundPack = KeysSoundPacks.Where(p => p.KeysName.ToLower().Contains(SoundPackSavedString)).ToList()[0];
+                    currentSoundPack = keysSoundPacks.Where(p => p.KeysName.ToLower().Contains(SoundPackSavedString)).ToList()[0];
                 }
                 catch (Exception ex)
                 {
-                    SoundPackSavedString = DefaultSoundPackName;
+                    SoundPackSavedString = defaultSoundPackName;
 
                     if (Program.ConsoleAttached) Console.WriteLine(ex.ToString());
                 }
@@ -169,13 +162,13 @@ namespace ClackyClicky
 
             Initialize();
 
-            int ItemIndex = 0;
+            int itemIndex = 0;
 
-            foreach (var ComboBoxItem in SoundPackComboBox.Items)
+            foreach (var comboBoxItem in SoundPackComboBox.Items)
             {
-                if (ComboBoxItem.ToString().Contains(currentSoundPack.KeysName)) SoundPackComboBox.SelectedIndex = ItemIndex;
+                if (comboBoxItem.ToString().Contains(currentSoundPack.KeysName)) SoundPackComboBox.SelectedIndex = itemIndex;
 
-                ItemIndex++;
+                itemIndex++;
             }
 
             GC.Collect(GC.MaxGeneration);
@@ -198,13 +191,21 @@ namespace ClackyClicky
 
         public class MenuColorTable : ProfessionalColorTable
         {
-            public MenuColorTable() { UseSystemColors = false; }
-            public override Color ImageMarginGradientEnd { get { return Color.FromArgb(27, 27, 27); } }
-            public override Color ImageMarginGradientBegin { get { return Color.FromArgb(22, 22, 22); } }
-            public override Color ImageMarginGradientMiddle { get { return Color.Black; } }
-            public override Color MenuBorder { get { return Color.Gray; } }
-            public override Color MenuItemBorder { get { return Color.Gray; } }
-            public override Color MenuItemSelected { get { return Color.Cornsilk; } }
+            public MenuColorTable()
+            { UseSystemColors = false; }
+
+            public override Color ImageMarginGradientEnd
+            { get { return Color.FromArgb(27, 27, 27); } }
+            public override Color ImageMarginGradientBegin
+            { get { return Color.FromArgb(22, 22, 22); } }
+            public override Color ImageMarginGradientMiddle
+            { get { return Color.Black; } }
+            public override Color MenuBorder
+            { get { return Color.Gray; } }
+            public override Color MenuItemBorder
+            { get { return Color.Gray; } }
+            public override Color MenuItemSelected
+            { get { return Color.Cornsilk; } }
         }
 
         private Image InvertImage(Image image)
@@ -224,9 +225,9 @@ namespace ClackyClicky
             return pic;
         }
 
-        private static string KeysAudioDirectory = Path.Combine(Program.ProgramDirectory, "KeySounds");
+        private static string keysAudioDirectory = Path.Combine(Program.ProgramDirectory, "KeySounds");
 
-        private static List<SoundPack> KeysSoundPacks = new List<SoundPack>();
+        private static List<SoundPack> keysSoundPacks = new List<SoundPack>();
 
         private static SoundPack currentSoundPack;
 
@@ -238,7 +239,7 @@ namespace ClackyClicky
 
         private static void LoadKeysAudio()
         {
-            if (!Directory.Exists(KeysAudioDirectory))
+            if (!Directory.Exists(keysAudioDirectory))
             {
                 MessageBox.Show("Error no se pudo encontrar la carpeta con los datos de las teclas", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -247,7 +248,7 @@ namespace ClackyClicky
 
             List<string> ValidSoundsDirs = new List<string>();
 
-            foreach (string KeysDir in Directory.GetDirectories(KeysAudioDirectory))
+            foreach (string KeysDir in Directory.GetDirectories(keysAudioDirectory))
             {
                 if (Directory.Exists(Path.Combine(KeysDir, "press")) && Directory.Exists(Path.Combine(KeysDir, "release")))
                 {
@@ -269,11 +270,11 @@ namespace ClackyClicky
 
                     //Hacer esto con parallels para que se inicie el programa mas rapido
 
-                    string[] SoundDirs = Directory.GetDirectories(KeysDir);
+                    string[] soundDirs = Directory.GetDirectories(KeysDir);
 
-                    foreach (string SoundDir in SoundDirs)
+                    foreach (string SoundDir in soundDirs)
                     {
-                        PressType SoundDirType = SoundDir.ToLower().EndsWith("press") ? PressType.Press : PressType.Release;
+                        PressType soundDirType = SoundDir.ToLower().EndsWith("press") ? PressType.Press : PressType.Release;
 
                         foreach (string audio in Directory.EnumerateFiles(SoundDir))
                         {
@@ -287,25 +288,25 @@ namespace ClackyClicky
 
                                 if (audioName.StartsWith("GENERIC"))
                                 {
-                                    (SoundDirType == PressType.Press ? SndPack.GenericPressAudio : SndPack.GenericReleaseAudio).Add(player);
+                                    (soundDirType == PressType.Press ? SndPack.GenericPressAudio : SndPack.GenericReleaseAudio).Add(player);
                                 }
                                 else if (audioName.StartsWith("BACKSPACE"))
                                 {
-                                    (SoundDirType == PressType.Press ? SndPack.BackspacePressAudio : SndPack.BackspaceReleaseAudio).Add(player);
+                                    (soundDirType == PressType.Press ? SndPack.BackspacePressAudio : SndPack.BackspaceReleaseAudio).Add(player);
                                 }
                                 else if (audioName.StartsWith("ENTER"))
                                 {
-                                    (SoundDirType == PressType.Press ? SndPack.EnterPressAudio : SndPack.EnterReleaseAudio).Add(player);
+                                    (soundDirType == PressType.Press ? SndPack.EnterPressAudio : SndPack.EnterReleaseAudio).Add(player);
                                 }
                                 else if (audioName.StartsWith("SPACE"))
                                 {
-                                    (SoundDirType == PressType.Press ? SndPack.SpacePressAudio : SndPack.SpaceReleaseAudio).Add(player);
+                                    (soundDirType == PressType.Press ? SndPack.SpacePressAudio : SndPack.SpaceReleaseAudio).Add(player);
                                 }
                             }
                         }
                     }
 
-                    KeysSoundPacks.Add(SndPack);
+                    keysSoundPacks.Add(SndPack);
                 }
                 catch (Exception ex)
                 {
@@ -352,6 +353,7 @@ namespace ClackyClicky
             public MP3Player RandomSpaceReleaseAudio() => RandomElement(SpaceReleaseAudio);
 
             private Dictionary<int, int> lastPlayed = new Dictionary<int, int>();
+
             private dynamic RandomElement(dynamic element)
             {
                 int elementCounts = element.Count;
@@ -373,30 +375,31 @@ namespace ClackyClicky
 
             public List<MP3Player> GetSoundsList()
             {
-                List<MP3Player> Sounds = new List<MP3Player>();
+                List<MP3Player> sounds = new List<MP3Player>();
 
-                GenericPressAudio.ForEach(Sounds.Add);
-                GenericReleaseAudio.ForEach(Sounds.Add);
-                BackspacePressAudio.ForEach(Sounds.Add);
-                BackspaceReleaseAudio.ForEach(Sounds.Add);
-                EnterPressAudio.ForEach(Sounds.Add);
-                EnterReleaseAudio.ForEach(Sounds.Add);
-                SpacePressAudio.ForEach(Sounds.Add);
-                SpaceReleaseAudio.ForEach(Sounds.Add);
+                GenericPressAudio.ForEach(sounds.Add);
+                GenericReleaseAudio.ForEach(sounds.Add);
+                BackspacePressAudio.ForEach(sounds.Add);
+                BackspaceReleaseAudio.ForEach(sounds.Add);
+                EnterPressAudio.ForEach(sounds.Add);
+                EnterReleaseAudio.ForEach(sounds.Add);
+                SpacePressAudio.ForEach(sounds.Add);
+                SpaceReleaseAudio.ForEach(sounds.Add);
 
-                return Sounds;
+                return sounds;
             }
 
             public async Task LoadSoundsAsync() => await Task.Run(LoadSounds);
+
             public void LoadSounds()
             {
                 if (AlredyLoaded) return;
 
                 AlredyLoaded = true;
 
-                List<MP3Player> Sounds = GetSoundsList();
+                List<MP3Player> sounds = GetSoundsList();
 
-                foreach (MP3Player Player in Sounds)
+                foreach (MP3Player Player in sounds)
                 {
                     if (Program.ConsoleAttached) Console.WriteLine($"[{DateTime.Now}]:Loading " + new FileInfo(Player.AudioFilePath).FullName.Replace(new FileInfo(Program.ProgramPath).Directory.FullName, "").Trim('\\'));
                     Player.Load();
@@ -411,9 +414,9 @@ namespace ClackyClicky
 
                 AlredyLoaded = false;
 
-                List<MP3Player> Sounds = GetSoundsList();
+                List<MP3Player> sounds = GetSoundsList();
 
-                foreach (MP3Player Player in Sounds)
+                foreach (MP3Player Player in sounds)
                 {
                     if (Program.ConsoleAttached) Console.WriteLine($"[{DateTime.Now}]:Unloading " + new FileInfo(Player.AudioFilePath).FullName.Replace(new FileInfo(Program.ProgramPath).Directory.FullName, "").Trim('\\'));
 
@@ -434,7 +437,6 @@ namespace ClackyClicky
                     AltTabPressed = true;
                 }
             }
-
 
             if (VolumeHelper.CurrentVolume > 0)
             {
@@ -632,7 +634,7 @@ namespace ClackyClicky
                 VolumeHelper.SetProgramVolume(VolumeTrackBar.TrackBar.Value);
             }
 
-            ConfigHelper.WriteConfig(Application.ProductName, "PauseOnGame", PauseOnGameMenuItem.Checked.ToString());
+            ConfigHelper.WriteConfig(Application.ProductName, "pauseOnGame", PauseOnGameMenuItem.Checked.ToString());
         }
 
         private static void AlternAutoRun(bool AutoRun)
@@ -721,7 +723,7 @@ namespace ClackyClicky
                 return;
             }
 
-            SoundPack NewSelectedPack = KeysSoundPacks.Where(p => p.KeysName.ToLower().Contains(SoundPackComboBox.SelectedItem.ToString().ToLower().Split(' ')[1])).ToList()[0];
+            SoundPack NewSelectedPack = keysSoundPacks.Where(p => p.KeysName.ToLower().Contains(SoundPackComboBox.SelectedItem.ToString().ToLower().Split(' ')[1])).ToList()[0];
 
             if (NewSelectedPack == currentSoundPack)
             {
