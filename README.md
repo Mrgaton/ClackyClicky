@@ -7,13 +7,10 @@
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=Mrgaton.ClackyClicky)
 
 [codefactor]: https://www.codefactor.io/repository/github/Mrgaton/ClackyClicky/overview
-[issues]: https://github.com/mkaring/Mrgaton/ClackyClicky
 [license]: LICENSE.md
-[project_format]: docs/ProjectFormat.md
 
 [img_build]: https://img.shields.io/appveyor/ci/Mrgaton/ClackyClicky/master.svg?style=flat
 [img_codefactor]: https://www.codefactor.io/repository/github/mrgaton/clackyclicky/badge
-[img_gitter]: https://img.shields.io/gitter/room/Mrgaton/ClackyClicky.svg?style=flat
 [img_license]: https://img.shields.io/github/license/Mrgaton/ClackyClicky.svg?style=flat
 
 
