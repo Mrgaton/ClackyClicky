@@ -503,16 +503,18 @@ namespace ClackyClicky
             switch (key)
             {
                 case Keys.Back:
-                    return (pType == PressType.Press ? sndPack.RandomBackspacePressAudio() : sndPack.RandomBackspaceReleaseAudio());
+                    return (pType == PressType.Press) ? sndPack.RandomBackspacePressAudio() : sndPack.RandomBackspaceReleaseAudio();
 
                 case Keys.Enter:
-                    return (pType == PressType.Press ? sndPack.RandomEnterPressAudio() : sndPack.RandomEnterReleaseAudio());
+                    return (pType == PressType.Press) ? sndPack.RandomEnterPressAudio() : sndPack.RandomEnterReleaseAudio();
 
                 case Keys.Space:
-                    return (pType == PressType.Press ? sndPack.RandomSpacePressAudio() : sndPack.RandomSpaceReleaseAudio());
-            }
+                    return (pType == PressType.Press) ? sndPack.RandomSpacePressAudio() : sndPack.RandomSpaceReleaseAudio();
 
-            return (pType == PressType.Press ? sndPack.RandomGenericPressAudio() : sndPack.RandomGenericReleaseAudio());
+                default:
+                    return (pType == PressType.Press) ? sndPack.RandomGenericPressAudio() : sndPack.RandomGenericReleaseAudio();
+
+            }
         }
 
         public static bool LockAllKeys { get; set; }
