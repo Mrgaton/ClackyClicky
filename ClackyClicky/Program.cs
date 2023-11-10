@@ -73,8 +73,6 @@ namespace ClackyClicky
                 }
             }
 
-
-
             if (!UACEnabled && !admin)
             {
                 RunElevated(ProgramPath, "/Elevated " + CurrentProcess.Id);

@@ -130,7 +130,6 @@ namespace ClackyClicky
 
             keysSoundPacks.ForEach(sndPack => SoundPackComboBox.Items.Add("Teclas " + sndPack.KeysName + ((sndPack.EnterPressAudio.Count() > 0) ? " ⭐" : null)));
 
-
             string SoundPackSavedString = ConfigHelper.ReadConfig(Application.ProductName, "SelectedSoundPack");
 
             if (string.IsNullOrWhiteSpace(SoundPackSavedString)) SoundPackSavedString = defaultSoundPackName;
@@ -196,14 +195,19 @@ namespace ClackyClicky
 
             public override Color ImageMarginGradientEnd
             { get { return Color.FromArgb(27, 27, 27); } }
+
             public override Color ImageMarginGradientBegin
             { get { return Color.FromArgb(22, 22, 22); } }
+
             public override Color ImageMarginGradientMiddle
             { get { return Color.Black; } }
+
             public override Color MenuBorder
             { get { return Color.Gray; } }
+
             public override Color MenuItemBorder
             { get { return Color.Gray; } }
+
             public override Color MenuItemSelected
             { get { return Color.Cornsilk; } }
         }
