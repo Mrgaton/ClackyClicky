@@ -5,6 +5,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/fe6f2024150c4d9492076a4da1a6ccfa)](https://app.codacy.com/gh/Mrgaton/ClackyClicky)
 [![MIT License][img_license]][license]
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=Mrgaton.ClackyClicky)
+[![Downloads](https://img.shields.io/github/downloads/Mrgaton/DisableWindowsDefender/total?color=green)]()
 
 [codefactor]: https://www.codefactor.io/repository/github/Mrgaton/ClackyClicky/overview
 [license]: LICENSE.md
