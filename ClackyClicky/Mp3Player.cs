@@ -24,7 +24,7 @@ namespace ClackyClicky
 
         public void Load()
         {
-            if (AudioFilePath == null) throw new Exception("Open audio file frist");
+            if (AudioFilePath == null) throw new FileNotFoundException("Open audio file frist");
             if (reader == null) reader = new Mp3FileReader(new MemoryStream(File.ReadAllBytes(AudioFilePath), false));
         }
 

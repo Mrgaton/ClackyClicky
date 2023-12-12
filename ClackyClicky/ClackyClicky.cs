@@ -756,15 +756,15 @@ namespace ClackyClicky
             {
                 if (windowHandle == IntPtr.Zero) return;
 
-                GetWindowThreadProcessId(windowHandle, out uint ProcessId);
+                GetWindowThreadProcessId(windowHandle, out uint processId);
 
-                if (explorerProcesses.Any(proc => proc.Id == ProcessId)) return; //We dont want to check if explorer its on full screen xd
+                if (explorerProcesses.Any(proc => proc.Id == processId)) return; //We dont want to check if explorer its on full screen xd
 
                 Screen ProcessScreen = Screen.FromHandle(windowHandle);
 
-                GetWindowRect(windowHandle, out Rect ProcessRectangle);
+                GetWindowRect(windowHandle, out Rect processRectangle);
 
-                FullScreen = (ProcessRectangle.Bottom == ProcessScreen.Bounds.Bottom && ProcessRectangle.Right == ProcessScreen.Bounds.Right && ProcessRectangle.Left == ProcessScreen.Bounds.Left && ProcessRectangle.Top == ProcessScreen.Bounds.Top);
+                FullScreen = (processRectangle.Bottom == ProcessScreen.Bounds.Bottom && processRectangle.Right == ProcessScreen.Bounds.Right && processRectangle.Left == ProcessScreen.Bounds.Left && processRectangle.Top == ProcessScreen.Bounds.Top);
 
                 VolumeHelper.SetProgramVolume((FullScreen && PauseOnGameMenuItem.Checked ? 0 : VolumeTrackBar.TrackBar.Value));
             };
@@ -772,9 +772,9 @@ namespace ClackyClicky
 
         [DllImport("user32.dll")] private static extern Int32 GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
-        private static IntPtr LastActiveWindowsID = IntPtr.Zero;
+        private IntPtr lastActiveWindowsID = IntPtr.Zero;
 
-        public static event UpdateFocusedApplication FocusChanged;
+        public event UpdateFocusedApplication FocusChanged;
 
         public delegate void UpdateFocusedApplication(IntPtr windowHandle);
 
@@ -786,16 +786,16 @@ namespace ClackyClicky
             {
                 try
                 {
-                    IntPtr CurrentActiveWindow = GetForegroundWindow();
+                    IntPtr currentActiveWindow = GetForegroundWindow();
 
-                    if (CurrentActiveWindow != IntPtr.Zero)
+                    if (currentActiveWindow != IntPtr.Zero)
                     {
                         this.BeginInvoke((MethodInvoker)delegate
                         {
-                            FocusChanged?.Invoke(CurrentActiveWindow);
+                            FocusChanged?.Invoke(currentActiveWindow);
                         });
 
-                        if (CurrentActiveWindow != LastActiveWindowsID) LastActiveWindowsID = CurrentActiveWindow;
+                        if (currentActiveWindow != lastActiveWindowsID) lastActiveWindowsID = currentActiveWindow;
 
                         Thread.Sleep(200);
                     }
@@ -804,7 +804,11 @@ namespace ClackyClicky
                 {
                     Running = false;
                 }
-                catch (Exception ex) { if (Program.ConsoleAttached) Console.WriteLine(ex.ToString()); }
+                catch (Exception ex)
+                {
+                    if (Program.ConsoleAttached) Console.WriteLine(ex.ToString());
+                    else throw ex;
+                }
 
                 Thread.Sleep(800);
             }
@@ -813,10 +817,6 @@ namespace ClackyClicky
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)] private static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")] private static extern bool GetWindowRect(IntPtr hWnd, out Rect rect);
-
-        private void TrayMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-        }
 
         [StructLayout(LayoutKind.Sequential)]
         private struct Rect
