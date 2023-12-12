@@ -5,7 +5,7 @@ namespace ClackyClicky
 {
     internal class ConfigHelper
     {
-        public static readonly string ConfigFile = Path.Combine(Program.ProgramDirectory, "Config.ini");
+        public static readonly string configFile = Path.Combine(Program.ProgramDirectory, "Config.ini");
 
         private static class ReadWriteINIfile
         {
@@ -15,19 +15,20 @@ namespace ClackyClicky
             [DllImport("kernel32")]
             public static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
         }
-
-        public static string ReadConfig(string Name, string Key, int MaxLengh = 255)
+        public static string ReadConfig(string key, int maxLengh = 255) => ReadConfig(Application.ProductName, key, maxLengh);
+        public static string ReadConfig(string name, string key, int maxLengh = 255)
         {
-            StringBuilder sb = new StringBuilder(MaxLengh);
+            StringBuilder sb = new StringBuilder(maxLengh);
 
-            ReadWriteINIfile.GetPrivateProfileString(Name, Key, "", sb, MaxLengh, ConfigFile);
+            ReadWriteINIfile.GetPrivateProfileString(name, key, "", sb, maxLengh, configFile);
 
             return sb.ToString();
         }
 
-        public static void WriteConfig(string Name, string Key, string Value)
+        public static void WriteConfig(string key, string Value) => WriteConfig(Application.ProductName, key, Value);
+        public static void WriteConfig(string name, string key, string Value)
         {
-            ReadWriteINIfile.WritePrivateProfileString(Name, Key, Value, ConfigFile);
+            ReadWriteINIfile.WritePrivateProfileString(name, key, Value, configFile);
         }
     }
 }

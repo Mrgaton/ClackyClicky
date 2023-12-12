@@ -92,19 +92,19 @@ namespace ClackyClicky
             Application.Run(new ClackyClicky());
         }
 
-        public static bool RunElevated(string fileName, string arguments = default)
+        public static bool RunElevated(string filename, string arguments = default)
         {
-            ProcessStartInfo processInfo = new ProcessStartInfo();
+            ProcessStartInfo ProcessInfo = new ProcessStartInfo();
 
-            processInfo.UseShellExecute = true;
-            processInfo.Verb = "runas";
+            ProcessInfo.UseShellExecute = true;
+            ProcessInfo.Verb = "runas";
 
-            processInfo.FileName = fileName;
-            processInfo.Arguments = arguments;
+            ProcessInfo.FileName = filename;
+            ProcessInfo.Arguments = arguments;
 
             try
             {
-                Process.Start(processInfo);
+                Process.Start(ProcessInfo);
 
                 return true;
             }
@@ -131,30 +131,20 @@ namespace ClackyClicky
 
         private static void CreateShortcut()
         {
-            if (!admin)
-            {
-                return;
-            }
+            if (!admin) return;
 
-            string ShortcutFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), Application.ProductName);
+            string shortcutFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), Application.ProductName);
 
-            if (!Directory.Exists(ShortcutFolder))
-            {
-                Directory.CreateDirectory(ShortcutFolder);
-            }
+            if (!Directory.Exists(shortcutFolder)) Directory.CreateDirectory(shortcutFolder);
 
             WshShell shell = new WshShell();
-            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(Path.Combine(ShortcutFolder, Application.ProductName + ".lnk"));
+
+            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(Path.Combine(shortcutFolder, Application.ProductName + ".lnk"));
 
             shortcut.Description = Application.ProductName;
             shortcut.IconLocation = ProgramPath;
             shortcut.TargetPath = ProgramPath;
             shortcut.Save();
-
-            if (!File.Exists(Path.Combine(ShortcutFolder, "ClickyClacky.lnk")))
-            {
-                File.Copy(Path.Combine(ShortcutFolder, Application.ProductName + ".lnk"), Path.Combine(ShortcutFolder, "ClickyClacky.lnk"));
-            }
         }
     }
 }

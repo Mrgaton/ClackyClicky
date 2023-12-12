@@ -4,62 +4,55 @@ namespace ClackyClicky
 {
     internal class RegistryHelper
     {
-        public static void CreateAutoStartProgram(string appName, string AppPath) => CreateAutoStartProgram(Registry.CurrentUser, appName, AppPath);
+        public static void CreateAutoStartProgram(string appname, string AppPath) => CreateAutoStartProgram(Registry.CurrentUser, appname, AppPath);
 
-        public static void CreateAutoStartProgram(RegistryKey hive, string appName, string AppPath) => hive.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).SetValue(appName, AppPath, RegistryValueKind.String);
+        public static void CreateAutoStartProgram(RegistryKey hive, string appname, string AppPath) => hive.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).SetValue(appname, AppPath, RegistryValueKind.String);
 
-        public static string ReadAutoStartProgram(string appName) => ReadAutoStartProgram(Registry.CurrentUser, appName);
+        public static string ReadAutoStartProgram(string appname) => ReadAutoStartProgram(Registry.CurrentUser, appname);
 
-        public static string ReadAutoStartProgram(RegistryKey hive, string appName) => hive.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", false).GetValue(appName).ToString();
+        public static string ReadAutoStartProgram(RegistryKey hive, string appname) => hive.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", false).GetValue(appname).ToString();
 
-        public static void RemoveAutoStartProgram(string appName) => RemoveAutoStartProgram(Registry.CurrentUser, appName);
+        public static void RemoveAutoStartProgram(string appname) => RemoveAutoStartProgram(Registry.CurrentUser, appname);
 
-        public static void RemoveAutoStartProgram(RegistryKey hive, string appName)
+        public static void RemoveAutoStartProgram(RegistryKey hive, string appname)
         {
-            if (StrartupProgramExist(appName))
-            {
-                hive.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue(appName);
-            }
+            if (StrartupProgramExist(appname)) hive.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue(appname);
         }
 
-        public static void AcceptAutoRunRegedit(string aplicationRegeditName) => AcceptAutoRunRegedit(Registry.CurrentUser, aplicationRegeditName);
+        public static void AcceptAutoRunRegedit(string aplicationRegeditname) => AcceptAutoRunRegedit(Registry.CurrentUser, aplicationRegeditname);
 
-        public static void AcceptAutoRunRegedit(RegistryKey hive, string aplicationRegeditName) => hive.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run", true).SetValue(aplicationRegeditName, new byte[] { 0002, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00 }, RegistryValueKind.Binary);
+        public static void AcceptAutoRunRegedit(RegistryKey hive, string aplicationRegeditname) => hive.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run", true).SetValue(aplicationRegeditname, new byte[] { 0002, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00 }, RegistryValueKind.Binary);
 
-        public static void DisableAutoRunRegedit(string aplicationRegeditName) => DisableAutoRunRegedit(Registry.CurrentUser, aplicationRegeditName);
+        public static void DisableAutoRunRegedit(string aplicationRegeditname) => DisableAutoRunRegedit(Registry.CurrentUser, aplicationRegeditname);
 
-        public static void DisableAutoRunRegedit(RegistryKey hive, string aplicationRegeditName) => hive.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run", true).SetValue(aplicationRegeditName, new byte[] { 0099, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99 }, RegistryValueKind.Binary);
+        public static void DisableAutoRunRegedit(RegistryKey hive, string aplicationRegeditname) => hive.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run", true).SetValue(aplicationRegeditname, new byte[] { 0099, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99 }, RegistryValueKind.Binary);
 
-        public static bool StrartupProgramDisabled(string appName) => StrartupProgramDisabled(Registry.CurrentUser, appName);
+        public static bool StrartupProgramDisabled(string appname) => StrartupProgramDisabled(Registry.CurrentUser, appname);
 
-        public static bool StrartupProgramDisabled(RegistryKey hive, string appName)
+        public static bool StrartupProgramDisabled(RegistryKey hive, string appname)
         {
             try
             {
-                return !BitConverter.ToString((byte[])ReadRegristyKey(hive, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run", appName)).Trim().StartsWith("02");
+                return !BitConverter.ToString((byte[])ReadRegristykey(hive, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run", appname)).Trim().StartsWith("02");
             }
-            catch
-            { }
+            catch { }
 
             return false;
         }
 
-        public static bool StrartupProgramExist(string appName) => StrartupProgramExist(Registry.CurrentUser, appName);
+        public static bool StrartupProgramExist(string appname) => StrartupProgramExist(Registry.CurrentUser, appname);
 
-        public static bool StrartupProgramExist(RegistryKey hive, string appName) => RegistryValueExists(hive, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", appName);
+        public static bool StrartupProgramExist(RegistryKey hive, string appname) => RegistryValueExists(hive, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", appname);
 
-        public static bool RegistryValueExists(RegistryKey hive, string registryRoot, string valueName) => hive.OpenSubKey(registryRoot, false).GetValue(valueName) != null;
+        public static bool RegistryValueExists(RegistryKey hive, string registryRoot, string valuename) => hive.OpenSubKey(registryRoot, false).GetValue(valuename) != null;
 
-        private static object? ReadRegristyKey(RegistryKey hive, string Key, string Value)
+        private static object? ReadRegristykey(RegistryKey hive, string key, string Value)
         {
             try
             {
-                using (RegistryKey key = hive?.OpenSubKey(Key))
+                using (RegistryKey regKey = hive?.OpenSubKey(key))
                 {
-                    if (key != null)
-                    {
-                        return key.GetValue(Value);
-                    }
+                    if (regKey != null) return regKey.GetValue(Value);
                 }
             }
             catch (Exception ex) { if (Program.ConsoleAttached) Console.WriteLine(ex.ToString()); }

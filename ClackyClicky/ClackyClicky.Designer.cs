@@ -52,6 +52,8 @@ namespace ClackyClicky
             RunOnStartUpMenuItem = new ToolStripMenuItem();
             DisableUACMenuItem = new ToolStripMenuItem();
             PauseOnGameMenuItem = new ToolStripMenuItem();
+            DisablePressSoundMenuItem = new ToolStripMenuItem();
+            DisableReleaseSoundMenuItem = new ToolStripMenuItem();
             StripSeparator_3 = new ToolStripSeparator();
             VolumenMenuItem = new ToolStripMenuItem();
             VolumeTrackBar = new TrackBarMenuItem();
@@ -75,7 +77,7 @@ namespace ClackyClicky
             TrayMenuStrip.DropShadowEnabled = false;
             TrayMenuStrip.ImageScalingSize = new Size(20, 20);
             TrayMenuStrip.ImeMode = ImeMode.On;
-            TrayMenuStrip.Items.AddRange(new ToolStripItem[] { StripSeparator_4, RunOnStartUpMenuItem, DisableUACMenuItem, PauseOnGameMenuItem, StripSeparator_3, VolumenMenuItem, VolumeTrackBar, StripSeparator_2, SwitchSoundMenuItem, SoundPackComboBox, StripSeparator_1, ExitMenuItem });
+            TrayMenuStrip.Items.AddRange(new ToolStripItem[] { StripSeparator_4, RunOnStartUpMenuItem, DisableUACMenuItem, PauseOnGameMenuItem,DisablePressSoundMenuItem,DisableReleaseSoundMenuItem, StripSeparator_3, VolumenMenuItem, VolumeTrackBar, StripSeparator_2, SwitchSoundMenuItem, SoundPackComboBox, StripSeparator_1, ExitMenuItem });
             TrayMenuStrip.Name = "TrayMenuStrip";
             TrayMenuStrip.RenderMode = ToolStripRenderMode.Professional;
             TrayMenuStrip.Size = new Size(355, 263);
@@ -101,6 +103,25 @@ namespace ClackyClicky
             DisableUACMenuItem.Size = new Size(354, 24);
             DisableUACMenuItem.Text = "Añadir soporte a apps con administrador";
             DisableUACMenuItem.Click += DisableUACMenuItem_Click;
+
+            // 
+            // DisablePressSoundMenuItem
+            // 
+            DisablePressSoundMenuItem.BackColor = Color.Transparent;
+            DisablePressSoundMenuItem.Name = "DisablePressSoundMenuItem";
+            DisablePressSoundMenuItem.Size = new Size(354, 24);
+            DisablePressSoundMenuItem.Text = "Desactivar sonido al presionar las teclas";
+            DisablePressSoundMenuItem.Click += DisablePressSoundMenuItem_Click;
+
+            // 
+            // DisableReleaseSoundMenuItem
+            // 
+            DisableReleaseSoundMenuItem.BackColor = Color.Transparent;
+            DisableReleaseSoundMenuItem.Name = "DisableReleaseSoundMenuItem";
+            DisableReleaseSoundMenuItem.Size = new Size(354, 24);
+            DisableReleaseSoundMenuItem.Text = "Desactivar sonido al soltar las teclas";
+            DisableReleaseSoundMenuItem.Click += DisableReleaseSoundMenuItem_Click;
+
             // 
             // PauseOnGameMenuItem
             // 
@@ -213,6 +234,8 @@ namespace ClackyClicky
         private System.Windows.Forms.Timer TrashTruckTimer;
         private ToolStripSeparator StripSeparator_1;
         private ToolStripMenuItem RunOnStartUpMenuItem;
+        private ToolStripMenuItem DisablePressSoundMenuItem;
+        private ToolStripMenuItem DisableReleaseSoundMenuItem;
         private ToolStripMenuItem DisableUACMenuItem;
         private ClackyClicky.TrackBarMenuItem VolumeTrackBar;
         private ToolStripSeparator StripSeparator_2;

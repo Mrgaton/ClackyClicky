@@ -11,12 +11,12 @@ namespace ClackyClicky
         private Mp3FileReader? reader;
         private WaveOutEvent? waveOut;
 
-        public void Open(string fileName)
+        public void Open(string filename)
         {
             if (reader != null) reader.Dispose();
             if (waveOut != null) waveOut.Dispose();
 
-            AudioFilePath = fileName;
+            AudioFilePath = filename;
 
             reader = null;
             waveOut = null;
@@ -49,16 +49,16 @@ namespace ClackyClicky
         {
             if (reader == null || waveOut == null) return;
 
-            waveOut?.Stop();
-            reader?.Seek(0, SeekOrigin.Begin);
-            waveOut?.Play();
+            waveOut.Stop();
+            reader.Seek(0, SeekOrigin.Begin);
+            waveOut.Play();
         }
 
         public void Stop()
         {
             if (reader == null || waveOut == null) return;
 
-            waveOut?.Stop();
+            waveOut.Stop();
         }
 
         public void Dispose()
