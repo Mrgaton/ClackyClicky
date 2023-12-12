@@ -9,16 +9,16 @@ namespace ClackyClicky
 {
     internal static class Program
     {
-        public static Process CurrentProcess = Process.GetCurrentProcess();
+        public static readonly Process CurrentProcess = Process.GetCurrentProcess();
 
-        public static string ProgramPath = Application.ExecutablePath;
-        public static string ProgramDirectory = new FileInfo(ProgramPath).Directory.FullName;
-        public static bool ConsoleAttached = RunningWithConsole();
+        public static readonly string ProgramPath = Application.ExecutablePath;
+        public static readonly string ProgramDirectory = new FileInfo(ProgramPath).Directory.FullName;
+        public static readonly bool ConsoleAttached = RunningWithConsole();
 
-        public static Icon ProgramIco = Icon.ExtractAssociatedIcon(ProgramPath);
+        public static readonly Icon ProgramIco = Icon.ExtractAssociatedIcon(ProgramPath);
 
-        public static bool UACEnabled = (int)Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System").GetValue("EnableLUA") == 1;
-        public static bool admin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+        public static readonly bool UACEnabled = (int)Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System").GetValue("EnableLUA") == 1;
+        public static readonly bool admin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 
         [STAThread]
         private static void Main(string[] args)
