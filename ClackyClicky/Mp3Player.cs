@@ -36,6 +36,7 @@ namespace ClackyClicky
             {
                 waveOut = new WaveOutEvent();
                 waveOut.Init(reader);
+                waveOut.Volume = 1f;
             }
             else
             {
