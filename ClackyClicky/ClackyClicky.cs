@@ -131,7 +131,7 @@ namespace ClackyClicky
             outputDevice.Init(mixer);
             outputDevice.Play();*/
 
-            KeysSoundPacks.ForEach(sndPack => SoundPackComboBox.Items.Add("Teclas " + sndPack.Keysname + ((sndPack.EnterPressAudio.Any()) ? " ⭐" : null)));
+            KeysSoundPacks.ForEach(sndPack => SoundPackComboBox.Items.Add("Teclas " + sndPack.KeysName + ((sndPack.EnterPressAudio.Any()) ? " ⭐" : null)));
 
             string SoundPackSavedString = ConfigHelper.ReadConfig(Application.ProductName, "SelectedSoundPack");
 
@@ -143,7 +143,7 @@ namespace ClackyClicky
 
                 try
                 {
-                    currentSoundPack = KeysSoundPacks.Where(p => p.Keysname.ToLower().Contains(SoundPackSavedString)).ToList()[0];
+                    currentSoundPack = KeysSoundPacks.Where(p => p.KeysName.ToLower().Contains(SoundPackSavedString)).ToList()[0];
                 }
                 catch (Exception ex)
                 {
@@ -168,7 +168,7 @@ namespace ClackyClicky
 
             foreach (var comboBoxItem in SoundPackComboBox.Items)
             {
-                if (comboBoxItem.ToString().Contains(currentSoundPack.Keysname)) SoundPackComboBox.SelectedIndex = itemIndex;
+                if (comboBoxItem.ToString().Contains(currentSoundPack.KeysName)) SoundPackComboBox.SelectedIndex = itemIndex;
 
                 itemIndex++;
             }
@@ -271,7 +271,7 @@ namespace ClackyClicky
 
                     SoundPack SndPack = new SoundPack();
 
-                    SndPack.Keysname = KeysDir.Split('\\').Last();
+                    SndPack.KeysName = KeysDir.Split('\\').Last();
 
                     //Hacer esto con parallels para que se inicie el programa mas rapido
 
@@ -322,8 +322,8 @@ namespace ClackyClicky
 
         private class SoundPack
         {
-            private bool AlredyLoaded = false;
-            public string Keysname { get; set; } = null;
+            private bool AlredyLoaded;
+            public string KeysName { get; set; }
 
             public List<MP3Player> GenericPressAudio = new List<MP3Player>();
 
@@ -431,10 +431,9 @@ namespace ClackyClicky
         }
 
         private static List<Keys> pressedKeys = new List<Keys>();
-        private static bool AltTabPressed = false;
+        private static bool AltTabPressed;
 
-        private bool disablePressSound = false;
-
+        private bool disablePressSound;
         private void keyboardHook_GlobalkeyPressed(Keys key)
         {
             /*if (PauseOnGameMenuItem.Checked)
@@ -465,7 +464,7 @@ namespace ClackyClicky
             }
         }
 
-        private bool disableReleaseSound = false;
+        private bool disableReleaseSound;
 
         private void keyboardHook_GlobalkeyReleased(Keys key)
         {
@@ -712,7 +711,7 @@ namespace ClackyClicky
             }
 
             ConfigHelper.WriteConfig(Application.ProductName, "KeysVolume", VolumeTrackBar.TrackBar.Value.ToString());
-            ConfigHelper.WriteConfig(Application.ProductName, "SelectedSoundPack", currentSoundPack.Keysname);
+            ConfigHelper.WriteConfig(Application.ProductName, "SelectedSoundPack", currentSoundPack.KeysName);
 
             if (Program.ConsoleAttached) Console.WriteLine("Configuracion guardada");
             if (Program.ConsoleAttached) Console.WriteLine();
@@ -722,7 +721,7 @@ namespace ClackyClicky
         {
             if (SoundPackComboBox.SelectedIndex < 0) return;
 
-            SoundPack NewSelectedPack = KeysSoundPacks.Where(p => p.Keysname.ToLower().Contains(SoundPackComboBox.SelectedItem.ToString().ToLower().Split(' ')[1])).ToList()[0];
+            SoundPack NewSelectedPack = KeysSoundPacks.Where(p => p.KeysName.ToLower().Contains(SoundPackComboBox.SelectedItem.ToString().ToLower().Split(' ')[1])).ToList()[0];
 
             if (NewSelectedPack == currentSoundPack) return;
 
@@ -734,7 +733,7 @@ namespace ClackyClicky
             //await currentSoundPack.LoadSoundsAsync();
             SoundPackComboBox.Enabled = true;
 
-            if (Program.ConsoleAttached) Console.WriteLine("Cambiando el pack de sonido a " + currentSoundPack.Keysname);
+            if (Program.ConsoleAttached) Console.WriteLine("Cambiando el pack de sonido a " + currentSoundPack.KeysName);
             if (Program.ConsoleAttached) Console.WriteLine();
 
             SaveDelayTimer.Enabled = false;
