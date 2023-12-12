@@ -98,8 +98,8 @@ namespace ClackyClicky
 
             if (!string.IsNullOrWhiteSpace(pauseOnGame)) PauseOnGameMenuItem.Checked = bool.TryParse(pauseOnGame, out bool pause) ? pause : false;
 
-            disablePressSound = DisablePressSoundMenuItem.Checked = bool.TryParse(ConfigHelper.ReadConfig(Application.ProductName, "disablePress"),out bool pressResult) ? pressResult : false;
-            disableReleaseSound = DisableReleaseSoundMenuItem.Checked = bool.TryParse(ConfigHelper.ReadConfig(Application.ProductName, "disableRelease"),out bool releaseResult) ? releaseResult : false;
+            disablePressSound = DisablePressSoundMenuItem.Checked = bool.TryParse(ConfigHelper.ReadConfig(Application.ProductName, "disablePress"), out bool pressResult) ? pressResult : false;
+            disableReleaseSound = DisableReleaseSoundMenuItem.Checked = bool.TryParse(ConfigHelper.ReadConfig(Application.ProductName, "disableRelease"), out bool releaseResult) ? releaseResult : false;
 
             string volumeSavedString = ConfigHelper.ReadConfig(Application.ProductName, "KeysVolume");
 
@@ -466,7 +466,7 @@ namespace ClackyClicky
         }
 
         private bool disableReleaseSound = false;
-       
+
         private void keyboardHook_GlobalkeyReleased(Keys key)
         {
             /*if (PauseOnGameMenuItem.Checked)
@@ -530,7 +530,7 @@ namespace ClackyClicky
 
                 HookStruct info = (HookStruct)Marshal.PtrToStructure(lParam, typeof(HookStruct));  //if (Program.ConsoleAttached) Console.WriteLine(wParam + "   " + (Keys)Marshal.ReadInt32(lParam));
 
-                if (nCode >= 0 )
+                if (nCode >= 0)
                 {
                     if (Program.ConsoleAttached) Console.WriteLine(nCode + " | " + wParam + " | " + lParam + " | " + info.time + " | " + info.flags + " | " + info.vkCode + " | " + info.dwExtraInfo);
 

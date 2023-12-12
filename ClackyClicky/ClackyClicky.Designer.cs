@@ -77,7 +77,7 @@ namespace ClackyClicky
             TrayMenuStrip.DropShadowEnabled = false;
             TrayMenuStrip.ImageScalingSize = new Size(20, 20);
             TrayMenuStrip.ImeMode = ImeMode.On;
-            TrayMenuStrip.Items.AddRange(new ToolStripItem[] { StripSeparator_4, RunOnStartUpMenuItem, DisableUACMenuItem, PauseOnGameMenuItem,DisablePressSoundMenuItem,DisableReleaseSoundMenuItem, StripSeparator_3, VolumenMenuItem, VolumeTrackBar, StripSeparator_2, SwitchSoundMenuItem, SoundPackComboBox, StripSeparator_1, ExitMenuItem });
+            TrayMenuStrip.Items.AddRange(new ToolStripItem[] { StripSeparator_4, RunOnStartUpMenuItem, DisableUACMenuItem, PauseOnGameMenuItem, DisableReleaseSoundMenuItem, DisablePressSoundMenuItem, StripSeparator_3, VolumenMenuItem, VolumeTrackBar, StripSeparator_2, SwitchSoundMenuItem, SoundPackComboBox, StripSeparator_1, ExitMenuItem });
             TrayMenuStrip.Name = "TrayMenuStrip";
             TrayMenuStrip.RenderMode = ToolStripRenderMode.Professional;
             TrayMenuStrip.Size = new Size(355, 263);
